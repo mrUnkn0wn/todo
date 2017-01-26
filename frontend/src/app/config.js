@@ -1,0 +1,1 @@
+export const restUrl = '/todo/api';

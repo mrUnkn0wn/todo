@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+                
+<mapper namespace="org.dmarkov.todo.mappers.TaskMapper" >
+    <select id="getTasks" resultType="task">
+        select
+            tasks.task_id as id,
+            tasks.description as description,
+            tasks.active as active
+        from 
+            tasks
+        where 
+            user_id = #{userId}
+    </select>
+    <select id="addTask" resultType="task">
+        insert into tasks (user_id, description, active)
+        values (#{param1}, #{param2.description}, #{param2.active})
+        returning task_id as id, description, active;
+    </select>
+    <delete id="deleteTask" parameterType="Integer">
+       delete from tasks where task_id=#{taskId}
+    </delete> 
+    <update id="updateTask">
+        update 
+            tasks
+        set 
+            description = #{param2.description},
+            active = #{param2.active}
+        where
+            user_id=#{param1}
+        and task_id=#{param2.id}
+    </update>
+</mapper>                
