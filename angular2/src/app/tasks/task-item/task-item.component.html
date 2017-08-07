@@ -1,0 +1,17 @@
+<div class="task-item task-item-container" [ngClass]="{'active': task.active}">
+  <div class="actions actions-left">
+      <a class="action item-change-status" (click)="changeStatus(task)"></a>
+  </div>
+  <div class="item-description">{{task.description}}</div>
+  <div class="actions actions-right">
+      <a class="action item-edit" (click)="editTask(task, taskEditInput);" [ngClass]="{'hidden': !task.active}"></a>
+      <a class="action item-delete" (click)="deleteTask(task.id)"></a>
+  </div>
+  <input
+    #taskEditInput
+    name="description"
+    type="text"
+    class="task-item-input"
+    [ngClass]="{'hidden': !task.editMode}"
+    (keyup.enter)="updateDescription(task, taskEditInput.value)"/>
+</div>

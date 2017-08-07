@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+header {
+  height: 80px;
+  background-color: #6987C9;
+  color: #E8ECF4;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 60px;
+  text-transform: uppercase;
+  letter-spacing: 15px;
+  font-weight: 100;
+  position: relative;
+  .header-logout{
+    position:absolute;
+    top:0;
+    right:0;
+    width:60px;
+    height: 100%;
+    cursor:pointer;
+    background: url('/assets/images/exit.png') no-repeat center center;
+  }
+}
+
+footer {
+  position:absolute;
+  width:100%;
+  bottom:0;
+  background-color: #6987C9;
+  color: #E8ECF4;
+}
+
+main {
+  padding-bootom:10px;
+}

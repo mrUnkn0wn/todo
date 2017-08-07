@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+
+import { AuthActions } from './auth.actions';
+
+@Injectable()
+export class AuthApiService {
+  constructor(private http: Http, private actions: AuthActions) {}
+
+  login ({username, password}) {
+    this.http.get(`/api/auth/login?username=${username}&password=${password}`).subscribe(
+      this.actions.authSucceed,
+      this.actions.authFailed
+    );
+  }
+
+  auth () {
+    this.http.get('/api/auth').subscribe(
+      this.actions.authSucceed,
+      this.actions.authFailed
+    );
+  }
+
+  logout () {
+    this.http.get('/api/auth/logout').subscribe(
+      this.actions.authFailed
+    );
+  }
+}
