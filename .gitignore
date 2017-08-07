@@ -1,9 +1,2 @@
-#frontend
-/frontend/build
-/frontend/node_modules
-/frontend/.idea
-
-#backend
-/backend/.DS_Store
-/backend/target
-/backend/nb-configuration.xml
+/.vagrant
+.DS_Store

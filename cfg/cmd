@@ -1,0 +1,89 @@
+######## DATABASE ########
+#installing postgres
+sudo apt-get install postgresql postgresql-contrib
+
+# open postgres console
+sudo -u postgres psql
+
+sudo nano /etc/postgresql/9.3/main/pg_hba.conf
+
+sudo nano /etc/postgresql/9.3/main/postgresql.conf
+
+sudo service postgresql restart
+######## BACKEND ########
+
+# Installing java
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install default-jdk
+sudo apt-get install oracle-java8-installer
+
+# Creating a new tomcat group
+sudo groupadd tomcat
+
+# Next, creating a new tomcat user. We'll make this user a member of the tomcat group, 
+# with a home directory of /opt/tomcat (where we will install Tomcat), and with a shell 
+# of /bin/false (so nobody can log into the account)
+
+sudo useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
+
+# Next, change to the /tmp directory on your server. 
+# This is a good directory to download ephemeral items, 
+# like the Tomcat tarball, which we won't need after extracting the Tomcat contents
+cd /tmp
+
+# Use curl to download the link that you copied from the Tomcat website
+curl -O http://apache-mirror.rbc.ru/pub/apache/tomcat/tomcat-8/v8.5.16/bin/apache-tomcat-8.5.16.tar.gz
+
+# We will install Tomcat to the /opt/tomcat directory. Create the directory, 
+# then extract the archive to it with these commands
+sudo mkdir /opt/tomcat
+sudo tar xzvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1
+
+# The tomcat user that we set up needs to have access to the Tomcat installation
+cd /opt/tomcat
+sudo chgrp -R tomcat /opt/tomcat
+
+# Next, give the tomcat group read access to the conf directory and all of its contents, 
+# and execute access to the directory itself
+sudo chmod -R g+r conf
+sudo chmod g+x conf
+
+# Make the tomcat user the owner of the webapps, work, temp, and logs directories
+sudo chown -R tomcat webapps/ work/ temp/ logs/
+
+# Get java directory
+sudo update-java-alternatives -l
+
+# Create tomcat service and define JAVA_HOME
+sudo nano /etc/init/tomcat.conf
+
+#Reloading upstart config 
+sudo initctl reload-configuration
+
+#Starting tomcat
+sudo initctl start tomcat
+
+# adding users
+sudo nano /opt/tomcat/conf/tomcat-users.xml
+
+######## FRONTEND ########
+sudo apt-get update
+# installing node
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# installing nvm
+sudo apt-get install build-essential libssl-dev
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+
+
+sudo gem install sass
+sudo npm install -g gulp-cli
+
+############OTHER##################
+mvn tomcat:redeploy
+
+
+
+
