@@ -1,0 +1,17 @@
+<div class="task-item task-item-container" :class="{active: task.active}">
+  <div class="actions actions-left">
+      <a class="action item-change-status" @click="changeStatus"></a>
+  </div>
+  <div class="item-description">{{ task.description }}</div>
+  <div class="actions actions-right">
+      <a class="action item-edit" @click="editTask" :class="{hidden: !task.active}"></a>
+      <a class="action item-delete" @click="deleteTask"></a>
+  </div>
+  <input
+    name="description"
+    type="text"
+    class="task-item-input"
+    :class="{hidden: !task.editMode}"
+    v-model="task.description"
+    @keyup.enter="updateDescription"/>
+</div>

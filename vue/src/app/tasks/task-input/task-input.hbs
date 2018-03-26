@@ -1,0 +1,8 @@
+<div class="task-input-container">
+  <input
+    name="newTask"
+    type="text"
+    v-model.lazy="description"
+    @keyup.enter="addNewTask"
+    placeholder="What needs to be done?"/>
+</div>
