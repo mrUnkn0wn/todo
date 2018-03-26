@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { TasksApiService } from '../tasks.api.service';
-import { TasksActions } from '../tasks.actions';
+import { TaskApiService } from '../tasks.api.service';
+import { TaskActions } from '../tasks.actions';
 
 @Component({
   selector: 'task-item',
@@ -11,7 +11,7 @@ import { TasksActions } from '../tasks.actions';
 export class TaskItemComponent {
   @Input() task: Object
 
-  constructor (private service: TasksApiService, private actions: TasksActions) {}
+  constructor (private service: TaskApiService, private actions: TaskActions) {}
 
   deleteTask (id) {
     this.service.deleteTask(id);

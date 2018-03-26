@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { TasksApiService } from '../tasks.api.service';
+import { TaskApiService } from '../tasks.api.service';
 
 @Component({
   selector: 'task-input',
@@ -8,7 +8,7 @@ import { TasksApiService } from '../tasks.api.service';
   styleUrls: ['./task-input.component.scss']
 })
 export class TaskInputComponent {
-  constructor (private service: TasksApiService) {}
+  constructor (private service: TaskApiService) {}
 
   onEnter (description) {
     this.service.addTask(description);

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { TasksActions } from './tasks.actions';
+import { TasksActions, TaskActions } from './tasks.actions';
 
 @Injectable()
 export class TasksApiService {
@@ -13,6 +13,11 @@ export class TasksApiService {
       this.actions.getTasksSuccess(res.json());
     });
   }
+}
+
+@Injectable()
+export class TaskApiService {
+  constructor (private http: Http, private actions: TaskActions) {}
 
   addTask (description) {
     this.http.post('api/task', {description}).subscribe((res) => {

@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://localhost:4567/todo",
+    "target": "http://localhost:8080/todo",
     "secure": false,
     "logLevel": "debug"
   }

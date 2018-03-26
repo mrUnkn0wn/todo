@@ -1,53 +1,64 @@
 import { Injectable } from '@angular/core'
 import { dispatch } from '@angular-redux/store';
+import { Action } from 'redux';
+import { FluxStandardAction } from 'flux-standard-action';
 
-export const GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
-export const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
-export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
-export const UPDATE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
-export const CHANGE_EDIT_MODE = 'CHANGE_EDIT_MODE';
+import { ITask } from './tasks.model';
+
+type TasksPayload = ITask[]
+export type TasksAction = FluxStandardAction<TasksPayload, any>;
+
+type TaskPayload = ITask;
+interface TaskMetaData {
+  id: number,
+  editMode?: boolean
+}
+export type TaskAction = FluxStandardAction<TaskPayload, TaskMetaData>;
 
 @Injectable()
 export class TasksActions {
+  static readonly GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
 
   @dispatch()
-  getTasksSuccess(tasks) {
-    return {
-      type: GET_TASKS_SUCCESS,
-      tasks
-    }
-  }
+  getTasksSuccess = (tasks): TasksAction => ({
+      type: TasksActions.GET_TASKS_SUCCESS,
+      payload: tasks,
+      meta: null
+  })
+}
+
+@Injectable()
+export class TaskActions {
+  static readonly ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
+  static readonly DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
+  static readonly UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS';
+  static readonly CHANGE_EDIT_MODE = 'GET_TASKS_SUCCESS';
 
   @dispatch()
-  addTaskSuccess(task) {
-    return {
-      type: ADD_TASK_SUCCESS,
-      task
-    }
-  }
+  addTaskSuccess = (task): TaskAction => ({
+      type: TaskActions.ADD_TASK_SUCCESS,
+      payload: task,
+      meta: null
+  })
 
   @dispatch()
-  deleteTaskSuccess(id) {
-    return {
-      type: DELETE_TASK_SUCCESS,
-      id
-    }
-  }
+  deleteTaskSuccess = (id): TaskAction => ({
+      type: TaskActions.DELETE_TASK_SUCCESS,
+      payload: null,
+      meta: {id}
+  })
 
   @dispatch()
-  updateTaskSuccess(task) {
-    return {
-      type: UPDATE_TASK_SUCCESS,
-      task
-    }
-  }
+  updateTaskSuccess = (task): TaskAction => ({
+      type: TaskActions.UPDATE_TASK_SUCCESS,
+      payload: task,
+      meta: null
+  })
 
   @dispatch()
-  changeEditMode(id, editMode) {
-    return {
-      type: CHANGE_EDIT_MODE,
-      id,
-      editMode
-    }
-  }
+  changeEditMode = (id, editMode): TaskAction => ({
+      type: TaskActions.CHANGE_EDIT_MODE,
+      payload: null,
+      meta: {id, editMode}
+  })
 }
