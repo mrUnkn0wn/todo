@@ -31,6 +31,11 @@
             <version>1.5.9</version>
         </dependency>
         <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
@@ -59,18 +64,6 @@
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <path>/{project.artifactId}</path>
-                    <update>true</update>
-                    <url>http://127.0.0.1:4567/manager/text/</url>
-                    <username>admin</username>
-                    <password>password</password>
                 </configuration>
             </plugin>
             <plugin>

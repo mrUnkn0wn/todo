@@ -31,8 +31,8 @@ public class AuthFilter implements ContainerRequestFilter {
         
         if(sessionId != null) {
             try {
-                Integer userId = authService.getSessionUserId(sessionId);
-                requestContext.getHeaders().add("user-id", userId.toString());
+                String userId = authService.getSessionUserId(sessionId);
+                requestContext.getHeaders().add("user-id", userId);
             } catch(AuthenticationException exception) {
                 requestContext.abortWith(Response.status(Status.UNAUTHORIZED).build());
             }            

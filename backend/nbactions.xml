@@ -8,7 +8,6 @@
             <goals>
                 <goal>clean</goal>
                 <goal>install</goal>
-                <goal>tomcat7:redeploy</goal>
             </goals>
         </action>
     </actions>

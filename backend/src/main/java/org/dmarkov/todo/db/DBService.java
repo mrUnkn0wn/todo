@@ -24,10 +24,10 @@ public class DBService {
         SqlSessionFactory sqlMapper = null;
         
         try {
-                reader = Resources.getResourceAsReader(resource);
-                sqlMapper = new SqlSessionFactoryBuilder().build(reader);
+            reader = Resources.getResourceAsReader(resource);
+            sqlMapper = new SqlSessionFactoryBuilder().build(reader);
         } catch (IOException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
         
         session = sqlMapper.openSession(true);

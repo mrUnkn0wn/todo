@@ -1,22 +1,25 @@
 package org.dmarkov.todo.services;
 
-import java.util.Date;
 import java.util.UUID;
 import javax.naming.AuthenticationException;
-import org.dmarkov.todo.entities.Session;
+import org.dmarkov.todo.db.RedisService;
 
 public class AuthService extends BaseService {
+    private final int TTL = 600;
+    private final RedisService redisService = new RedisService("auth");
+    
+    
     public String login(String username, String password) throws AuthenticationException {
         Integer userId = dbService.getAuthMapper().login(username, password);
-
+        System.out.println("================================================");
         if(userId != null && userId > 0) {
-            Session session = new Session();
             String sessionId = UUID.randomUUID().toString();
-            session.setUserId(userId);
-            session.setSessionId(sessionId);
-            session.setCreationTime(new Date());
             
-            dbService.getAuthMapper().createSession(session);
+            try {
+                this.redisService.set(sessionId, userId.toString(), TTL);
+            } catch (Exception e) {
+                throw new AuthenticationException();
+            }
             
             return sessionId;
         } else {
@@ -28,12 +31,9 @@ public class AuthService extends BaseService {
     public String auth(String sessionId) throws AuthenticationException{
         if(sessionId != null) {
             String newSessionId = UUID.randomUUID().toString();
-            Session session = dbService.getAuthMapper().getSession(sessionId);
-            if(session != null) {                
-                session.setCreationTime(new Date());
-                session.setSessionId(newSessionId);
-                dbService.getAuthMapper().createSession(session);
-                dbService.getAuthMapper().deleteSession(sessionId);
+            String userId = this.redisService.get(sessionId);
+            if(userId != null) {                
+                this.redisService.set(newSessionId, userId, TTL);
                 
                 return newSessionId;
             } else {
@@ -46,13 +46,15 @@ public class AuthService extends BaseService {
     
     public void logout(String sessionId) {
         if (sessionId != null) {
-            dbService.getAuthMapper().deleteSession(sessionId);
+            this.redisService.delete(sessionId);
         }
     }
     
-    public Integer getSessionUserId(String sessionId) throws AuthenticationException{
-        if(sessionId != null) {
-            return dbService.getAuthMapper().getSessionUserId(sessionId);
+    public String getSessionUserId(String sessionId) throws AuthenticationException {
+        String userId = this.redisService.get(sessionId); 
+        
+        if(userId != null) {
+            return userId;
         } else {
             throw new AuthenticationException();
         }
