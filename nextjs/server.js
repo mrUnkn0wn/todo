@@ -5,18 +5,18 @@ const next = require('next');
 const fs = require('fs')
 
 const proxy = {
-  '/api': {
-      target: 'http://localhost:8080/todo/api',
-      pathRewrite: {'^/api': '/'},
-      changeOrigin: true
-  }
+    '/api': {
+        target: 'http://localhost:8080/todo/api',
+        pathRewrite: {'^/api': '/'},
+        changeOrigin: true
+    }
 }
 
 const env = process.env.NODE_ENV
 const dev = env !== 'production'
 const app = next({
-  dir: '.',
-  dev
+    dir: '.',
+    dev
 })
 
 const handle = app.getRequestHandler();
@@ -24,7 +24,7 @@ const port = 3000;
 
 let server;
 app.prepare()
-.then((a, b, c, d) => {
+.then(() => {
     server = express()
 
     // Set up the proxy.
@@ -41,10 +41,10 @@ app.prepare()
         } else if (req.url.startsWith('static/workbox/')) {
             app.serveStatic(req, res, join(__dirname, req.url));
         } else {
-            // if (req.url === '/login' || req.url === '/index') {
-            //     pushScriptFile(res, '/pages/_app.js', app.renderOpts.buildId);
-            //     pushScriptFile(res, '/pages/_error.js', app.renderOpts.buildId);
-            // }
+            if (req.url === '/login' || req.url === '/index') {
+                pushScriptFile(res, '/pages/_app.js', app.renderOpts.buildId);
+                pushScriptFile(res, '/pages/_error.js', app.renderOpts.buildId);
+            }
 
             handle(req, res, req.url);
         }
@@ -67,10 +67,6 @@ app.prepare()
     console.log(err)
 });
 
-//app.renderOpts.buildId -
-// /_next/static/e1qlYB_C~KIiNYb5fv3dK/pages/_app.js
-// /_next/static/e1qlYB_C~KIiNYb5fv3dK/pages/_error.js
-// /_next/static/e1qlYB_C~KIiNYb5fv3dK/pages/login.js
 function pushScriptFile (res, filename, buildId) {
     const url = `/_next/static/${buildId}${filename}`;
     const stream = res.push(url, {
