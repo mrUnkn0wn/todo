@@ -3,13 +3,15 @@ import { Component, Input } from '@angular/core';
 import { TaskApiService } from '../tasks.api.service';
 import { TaskActions } from '../tasks.actions';
 
+import { ITask } from '../tasks.model';
+
 @Component({
   selector: 'task-item',
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss']
 })
 export class TaskItemComponent {
-  @Input() task: Object
+  @Input() task: ITask
 
   constructor (private service: TaskApiService, private actions: TaskActions) {}
 

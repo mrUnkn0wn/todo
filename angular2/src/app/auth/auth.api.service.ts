@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { AuthActions } from './auth.actions';
 
 @Injectable()
 export class AuthApiService {
-  constructor(private http: Http, private actions: AuthActions) {}
+  constructor(private http: HttpClient, private actions: AuthActions) {}
 
   login ({username, password}) {
     this.http.get(`/api/auth/login?username=${username}&password=${password}`).subscribe(

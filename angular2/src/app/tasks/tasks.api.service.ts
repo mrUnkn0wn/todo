@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import { TasksActions, TaskActions } from './tasks.actions';
 
 @Injectable()
 export class TasksApiService {
 
-  constructor (private http: Http, private actions: TasksActions) {}
+  constructor (private http: HttpClient, private actions: TasksActions) {}
 
   getTasks () {
     this.http.get('/api/task').subscribe((res) => {
-      this.actions.getTasksSuccess(res.json());
+      this.actions.getTasksSuccess(res);
     });
   }
 }
 
 @Injectable()
 export class TaskApiService {
-  constructor (private http: Http, private actions: TaskActions) {}
+  constructor (private http: HttpClient, private actions: TaskActions) {}
 
   addTask (description) {
     this.http.post('api/task', {description}).subscribe((res) => {
-      this.actions.addTaskSuccess(res.json());
+      this.actions.addTaskSuccess(res);
     });
   }
 
@@ -33,7 +33,7 @@ export class TaskApiService {
 
   updateTask (task) {
     this.http.put('api/task', task).subscribe((res) => {
-      this.actions.updateTaskSuccess(res.json());
+      this.actions.updateTaskSuccess(res);
     });
   }
 }

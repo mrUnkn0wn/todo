@@ -6,14 +6,14 @@ import { FluxStandardAction } from 'flux-standard-action';
 import { ITask } from './tasks.model';
 
 type TasksPayload = ITask[]
-export type TasksAction = FluxStandardAction<TasksPayload, any>;
+export type TasksAction = FluxStandardAction<string, TasksPayload, any>;
 
 type TaskPayload = ITask;
 interface TaskMetaData {
   id: number,
   editMode?: boolean
 }
-export type TaskAction = FluxStandardAction<TaskPayload, TaskMetaData>;
+  export type TaskAction = FluxStandardAction<string, TaskPayload, TaskMetaData>;
 
 @Injectable()
 export class TasksActions {
