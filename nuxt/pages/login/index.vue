@@ -1,0 +1,15 @@
+<template>
+  <form @submit.prevent="submit" class="form login-form">
+    <div class="form-component">
+      <input name="username" type="text" v-model.lazy="username" placeholder="Username"/>
+      <label>Username</label>
+    </div>
+    <div class="form-component">
+      <input name="password" type="password" v-model.lazy="password" placeholder="Password"/>
+      <label>Password</label>
+    </div>
+    <button type="submit">Login</button>
+  </form>
+</template>
+<script src="./component.js"></script>
+<style src="./styles.scss" lang="scss"></script>

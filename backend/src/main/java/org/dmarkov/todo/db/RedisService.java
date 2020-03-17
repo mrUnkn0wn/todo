@@ -1,25 +1,16 @@
 package org.dmarkov.todo.db;
 
-import java.util.HashSet;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.HostAndPort;
-import redis.clients.jedis.JedisSentinelPool;
 
 public class RedisService {
 
-    JedisSentinelPool pool;
-    JedisCluster cluster;
+    JedisPool pool;
     String namespace = null;
 
     public RedisService(String namespace) {
-        HashSet<String> slaves = new HashSet<>();
-        slaves.add("redis_slave_1:6379");
-        slaves.add("redis_slave_2:6379");
-
-        pool = new JedisSentinelPool("redis_master", slaves);
+        pool = new JedisPool(new JedisPoolConfig(), "redis_master");
 
         this.namespace = namespace;
     }

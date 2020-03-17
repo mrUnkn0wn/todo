@@ -18,13 +18,3 @@ services:
   redis_master:
     image: redis
     container_name: redis
-  redis_slave_1:
-    image: redis
-    command: redis-server --slaveof redis_master 6379
-    links:
-      - redis_master
-  redis_slave_2:
-    image: redis
-    command: redis-server --slaveof redis_master 6379
-    links:
-      - redis_master

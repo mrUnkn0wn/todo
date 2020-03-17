@@ -1,0 +1,66 @@
+.task-item-container {
+  position: relative;
+  line-height:20px;
+  padding:10px 20px;
+  padding-left:50px;
+  font-size: 18px;
+  border-bottom:1px solid #E7ECEF;
+
+  &.active{
+    .item-description {
+      text-decoration: none;
+      color: #4b4d58;
+    }
+    .action.item-change-status {
+      background: url('/images/checkbox-unchecked.png') no-repeat center center !important;
+    }
+  }
+
+  .actions {
+    position: absolute;
+    top: 0px;
+
+    .action {
+      width: 40px;
+      height: 40px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .action.item-change-status {
+      background: url('/images/checkbox-checked.png') no-repeat center center;
+    }
+
+    .action.item-edit {
+      background: url('/images/edit.png') no-repeat center center;
+    }
+
+    .action.item-delete {
+      background: url('/images/delete.png') no-repeat center center;
+    }
+  }
+  .item-description {
+    text-decoration: line-through;
+    color:#999;
+
+  }
+
+  .actions-left {
+    left:0px;
+  }
+
+  .actions-right {
+    right:0px;
+  }
+
+  .task-item-input {
+    position: absolute;
+    width:100%;
+    z-index:100;
+    padding-right:50px;
+    top:0;
+    left:0;
+    box-sizing: border-box;
+    font-size:16px;
+  }
+}
